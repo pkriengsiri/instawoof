@@ -75,10 +75,13 @@ export default function App() {
       )}
       {loggedIn && (
         <Provider store={store}>
-        <MainScreen />
-      </Provider>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Main">
+              <Stack.Screen name="Main" component={MainScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Provider>
       )}
-      
     </>
   );
 }
