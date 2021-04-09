@@ -15,6 +15,7 @@ import RegisterScreen from "./components/auth/Register";
 import LoginScreen from "./components/auth/Login";
 import rootReducer from "./redux/reducers";
 import MainScreen from "./components/Main";
+import AddScreen from "./components/main/Add";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -77,7 +78,16 @@ export default function App() {
         <Provider store={store}>
           <NavigationContainer>
             <Stack.Navigator initialRouteName="Main">
-              <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
+              <Stack.Screen
+                name="Main"
+                component={MainScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Add"
+                component={AddScreen}
+                options={{ headerShown: false }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>
