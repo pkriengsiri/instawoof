@@ -6,12 +6,11 @@ import firebase from "firebase";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
 
-  const onSignUp = () => {
+  const onSignIn = () => {
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email, password)
       .then((result) => {
         console.log(result);
       })
@@ -22,7 +21,6 @@ export default function Register() {
 
   return (
     <View>
-      <TextInput placeholder="name" onChangeText={(name) => setName(name)} />
       <TextInput
         placeholder="email"
         onChangeText={(email) => setEmail(email)}
@@ -32,7 +30,7 @@ export default function Register() {
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button onPress={() => onSignUp()} title="Sign Up" />
+      <Button onPress={() => onSignIn()} title="Sign In" />
     </View>
   );
 }
