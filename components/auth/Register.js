@@ -14,6 +14,7 @@ export default function Register() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
+        // creates a document in the users collection with the user's name and email
         firebase.firestore()
           .collection("users")
           .doc(firebase.auth().currentUser.uid)
