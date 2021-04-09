@@ -8,11 +8,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // local imports
 import Landing from "./components/auth/Landing";
-import {FIREBASE_API_KEY} from "react-native-dotenv";
+import Register from "./components/auth/Register";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: {FIREBASE_API_KEY},
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "instawoof-2c2fc.firebaseapp.com",
   projectId: "instawoof-2c2fc",
   storageBucket: "instawoof-2c2fc.appspot.com",
@@ -21,6 +21,11 @@ const firebaseConfig = {
   measurementId: "G-QW2EW0KYEM"
 };
 
+// Check to see if any firebase instances are running
+if(firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -28,6 +33,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Landing" component={Landing} options={{headerShown: false}}/>
+        <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
