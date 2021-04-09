@@ -77,7 +77,7 @@ export default function App() {
         <Provider store={store}>
           <NavigationContainer>
             <Stack.Navigator initialRouteName="Main">
-              <Stack.Screen name="Main" component={MainScreen} />
+              <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

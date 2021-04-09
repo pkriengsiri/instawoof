@@ -1,40 +1,38 @@
 import React, { useEffect } from "react";
 import { View, Text } from "react-native";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-
-
-
-
-import {fetchUser} from "../redux/actions/index"
+import { fetchUser } from "../redux/actions/index";
+import FeedScreen from "./main/Feed";
 
 // Hides the error message about setting a timer
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Setting a timer']);
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Setting a timer"]);
 
-const Main = ({fetchUser, currentUser}) => {
-    useEffect(() => {
-        fetchUser();
-        console.log(currentUser);
-    }, []);
+const Tab = createBottomTabNavigator();
 
-    
+const Main = ({ fetchUser, currentUser }) => {
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   
-    return (
-      <View  style={{ flex: 1, justifyContent: "center" }}>
-        <Text>{currentUser?.name} is logged in</Text>
-      </View>
-    );
-  }
 
-  const mapStateToProps = (store) => ({
-    currentUser: store.userState.currentUser
-  })
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Feed" component={FeedScreen} />
+    </Tab.Navigator>
+  );
+};
 
-  const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({fetchUser}, dispatch)
-}
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser,
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main)
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ fetchUser }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
