@@ -1,35 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Button, Image } from "react-native";
 import { Camera } from "expo-camera";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from '@react-navigation/native';
 
-export default function App() {
+export default function Add() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [camera, setCamera] = useState(null);
-  const [image,setImage] = useState(null);
+  const [image, setImage] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const navigation = useNavigation();
+
 
   useEffect(() => {
+    //   console.log(navigation);
     (async () => {
       const cameraStatus = await Camera.requestPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === "granted");
 
-      if (Platform.OS !== 'web') {
+      if (Platform.OS !== "web") {
         const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
         setHasGalleryPermission(galleryStatus.status === "granted");
       }
     })();
   }, []);
 
+  // Uses the device camera to take a picture
   const takePicture = async () => {
-      console.log("clicked the take picture button")
-      if(camera) {
-          const data = await camera.takePictureAsync(null);
-          setImage(data.uri);
-      }
+    // Check for camera permission
+    if (camera) {
+      // Take a picture and set the uri as the image
+      const data = await camera.takePictureAsync(null);
+      setImage(data.uri);
+    }
   };
 
+  // Uses the device file system to choose an image
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -45,13 +52,16 @@ export default function App() {
     }
   };
 
-
-  if (hasCameraPermission === null || hasGalleryPermission === null ) {
+  // Return an empty view of camera/ gallery permissions have not been set
+  if (hasCameraPermission === null || hasGalleryPermission === null) {
     return <View />;
   }
+
+  // Return an error message if camera or gallery permissions is denied
   if (hasCameraPermission === false || hasGalleryPermission === false) {
     return <Text>Access to camera and gallery needed</Text>;
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.cameraContainer}>
@@ -85,7 +95,14 @@ export default function App() {
           pickImage();
         }}
       />
-      {image && <Image source={{uri:image}} style={styles.image}/>}
+      <Button
+        title="Save"
+        onPress={() => {
+          // Render the navigation component and pass in the image as a prop
+          return navigation.navigate("Save", { image });
+        }}
+      />
+      {image && <Image source={{ uri: image }} style={styles.image} />}
     </View>
   );
 }
@@ -118,6 +135,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
   image: {
-      flex: 1
-  }
+    flex: 1,
+  },
 });

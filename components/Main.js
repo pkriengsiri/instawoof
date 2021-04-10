@@ -6,7 +6,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { fetchUser } from "../redux/actions/index";
 import FeedScreen from "./main/Feed";
-import AddScreen from "./main/Add";
 import ProfileScreen from "./main/Profile";
 
 // Hides the error message about setting a timer

@@ -2,7 +2,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { View, Text } from "react-native";
 import { Provider } from "react-redux";
@@ -16,6 +16,7 @@ import LoginScreen from "./components/auth/Login";
 import rootReducer from "./redux/reducers";
 import MainScreen from "./components/Main";
 import AddScreen from "./components/main/Add";
+import SaveScreen from "./components/main/Save";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -38,9 +39,9 @@ if (firebase.apps.length === 0) {
 const Stack = createStackNavigator();
 
 export default function App() {
-  // Gets
   const [loggedIn, setLoggedIn] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -81,12 +82,14 @@ export default function App() {
               <Stack.Screen
                 name="Main"
                 component={MainScreen}
-                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="Add"
                 component={AddScreen}
-                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Save"
+                component={SaveScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>
