@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { fetchUser } from "../redux/actions/index";
+import { fetchUser, fetchUserPosts } from "../redux/actions/index";
 import FeedScreen from "./main/Feed";
 import ProfileScreen from "./main/Profile";
 
@@ -15,9 +15,10 @@ LogBox.ignoreLogs(["Setting a timer"]);
 const Tab = createBottomTabNavigator();
 const EmptyScreen = () => null;
 
-const Main = ({ fetchUser, currentUser }) => {
+const Main = ({ fetchUser, fetchUserPosts, currentUser }) => {
   useEffect(() => {
     fetchUser();
+    fetchUserPosts();
   }, []);
 
   return (
@@ -78,7 +79,7 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ fetchUser }, dispatch);
+  return bindActionCreators({ fetchUser, fetchUserPosts }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
