@@ -47,13 +47,15 @@ function Profile(props) {
           setUserPosts(posts);
         });
     }
+  }, [props.route.params.uid]);
 
+  useEffect(() => {
     if (props.following.indexOf(props.route.params.uid) > -1) {
       setFollowing(true);
     } else {
       setFollowing(false);
     }
-  }, [props.route.params.uid, props.following]);
+  }, [props.following]);
 
   const onFollow = () => {
     firebase
