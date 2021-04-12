@@ -62,6 +62,7 @@ function Profile(props) {
     }
   }, [props.following]);
 
+  // Changes the follow status of the user to follow in the firestore db
   const onFollow = () => {
     firebase
       .firestore()
@@ -72,6 +73,7 @@ function Profile(props) {
       .set({});
   };
 
+  // Removes the follow status of the user in the firestore db
   const onUnfollow = () => {
     firebase
       .firestore()
