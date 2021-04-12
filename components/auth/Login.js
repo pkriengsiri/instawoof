@@ -12,7 +12,7 @@ export default function Register() {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        console.log(result);
+        console.log("User signed in")
       })
       .catch((error) => {
         console.log(error);

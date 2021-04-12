@@ -22,7 +22,7 @@ export default function Register() {
             name,
             email,
           });
-        console.log(result);
+        console.log("User Registered")
       })
       .catch((error) => {
         console.log(error);
