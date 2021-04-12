@@ -14,7 +14,7 @@ export default function Add() {
 
 
   useEffect(() => {
-    //   console.log(navigation);
+    // Prompts the user for camera and media library permissions
     (async () => {
       const cameraStatus = await Camera.requestPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === "granted");
@@ -45,8 +45,7 @@ export default function Add() {
       quality: 1,
     });
 
-    console.log(result);
-
+    // If the user picks an image, set the uri to state
     if (!result.cancelled) {
       setImage(result.uri);
     }

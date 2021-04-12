@@ -8,6 +8,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   const onSignIn = () => {
+    //Checks the submitted email and password against the firebase auth
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
