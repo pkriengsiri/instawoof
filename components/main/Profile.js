@@ -10,12 +10,15 @@ function Profile(props) {
   const [user, setUser] = useState(null);
   const [following, setFollowing] = useState(false);
 
+ // Gets profile information for another user
   useEffect(() => {
     const { currentUser, posts } = props;
+    // Checks to see if the user is on their own profile page
     if (props.route.params.uid === firebase.auth().currentUser.uid) {
       setUser(currentUser);
       setUserPosts(posts);
     } else {
+      // Get the visited user's user info and set to state
       firebase
         .firestore()
         .collection("users")
@@ -28,6 +31,7 @@ function Profile(props) {
             console.log("User does not exist");
           }
         });
+      // Get the visit user's posts and set to state
       firebase
         .firestore()
         .collection("posts")
@@ -49,6 +53,7 @@ function Profile(props) {
     }
   }, [props.route.params.uid]);
 
+  // Checks to see if the current user is being followed by the logged in user
   useEffect(() => {
     if (props.following.indexOf(props.route.params.uid) > -1) {
       setFollowing(true);
